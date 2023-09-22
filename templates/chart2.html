@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chart Page</title>
+
+    <!-- Include Chart.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+
+    <!-- Include Word Cloud library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/wordcloud2/1.0.6/wordcloud2.min.js"></script>
+
+
+    <!-- Add your CSS styles if needed -->
+    <style>
+        /* Add your CSS styles here */
+    </style>
+</head>
+<body>
+    <h1>Bar Chart</h1>
+    <div id="bar-chart-container">
+        <canvas id="bar-chart" width="800" height="400"></canvas>
+    </div>
+
+    <h1>Word Cloud</h1>
+    <div id="word-cloud-container">
+        <img src="data:image/png;base64,{{ chart_data.word_cloud_image_base64 }}" alt="Word Cloud" id="word-cloud-image">
+    </div>
+
+    <!-- JavaScript code to render the charts -->
+    <script>
+        const barChartData = {
+            bar_labels: {{ chart_data.bar_labels | tojson }},
+            bar_values: {{ chart_data.bar_values | tojson }}
+            };
+
+        // Create a bar chart using Chart.js
+        const ctx = document.getElementById('bar-chart').getContext('2d');
+        const barChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: barChartData.bar_labels,
+                datasets: [{
+                    label: 'Top Words',
+                    data: barChartData.bar_values,
+                    backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1,
+                }],
+            },
+            options: {
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Words',
+                        },
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Frequency',
+                        },
+                    },
+                },
+            },
+        });
+
+    </script>
+</body>
+</html>

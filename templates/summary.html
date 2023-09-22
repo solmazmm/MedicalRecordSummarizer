@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/styles2.css') }}">
+    <title>Summary Table</title>
+</head>
+<body>
+    <a href="{{ url_for('chart') }}">View Charts</a>
+    <h1>Medical Record Summary</h1>
+    <table>
+        {{ html_table | safe }}
+    </table>
+</body>
+</html>
